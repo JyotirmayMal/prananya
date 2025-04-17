@@ -9,23 +9,16 @@ on:
 jobs:
   setup-and-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: '22.x'
-        python-version: '3.10'
 
     steps:
-      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ---------------------------
-      # Setup Python for ML Backend
-      # ---------------------------
-      - name: Set up Python ${{ matrix.python-version }}
+      # Setup Python for ML API
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.10
 
       - name: Install Python dependencies (ML API)
         working-directory: ./ml
@@ -40,26 +33,25 @@ jobs:
           sleep 5
           curl --fail http://127.0.0.1:5000 || exit 1
 
-      # -------------------------------
-      # Setup Node for Backend & Frontend
-      # -------------------------------
-      - name: Set up Node.js ${{ matrix.node-version }}
+      # Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.x
 
-      # --------- Express Backend ---------
+      # Backend
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm install
 
-      - name: Lint or test Express backend
+      - name: Run backend server (check)
         working-directory: ./backend
         run: |
-          echo "⚠️ Add backend tests here if available"
-          npm run dev & sleep 5
+          npm run dev &
+          sleep 5
+          curl --fail http://localhost:3000 || echo "Backend not responding"
 
-      # --------- React Frontend ---------
+      # Frontend
       - name: Install frontend dependencies
         working-directory: ./ui
         run: npm install
@@ -67,8 +59,3 @@ jobs:
       - name: Build React Vite frontend
         working-directory: ./ui
         run: npm run build
-
-      - name: Lint or test frontend
-        working-directory: ./ui
-        run: echo "⚠️ Add frontend tests here if available"
-
