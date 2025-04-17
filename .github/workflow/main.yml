@@ -22,7 +22,7 @@ jobs:
       # ---------------------------
       # Setup Python for ML Backend
       # ---------------------------
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -43,7 +43,7 @@ jobs:
       # -------------------------------
       # Setup Node for Backend & Frontend
       # -------------------------------
-      - name: Set up Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
