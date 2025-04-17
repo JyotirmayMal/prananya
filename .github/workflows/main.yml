@@ -49,7 +49,7 @@ jobs:
         run: |
           npm run dev &
           sleep 5
-          curl --fail http://localhost:3000 || echo "Backend not responding"
+          curl --fail http://localhost:5555 || echo "Backend not responding"
 
       # Frontend
       - name: Install frontend dependencies

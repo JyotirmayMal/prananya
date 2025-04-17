@@ -1,6 +1,7 @@
 import express from "express";
 import { PORT, mongoDBURL, GEMINI_API_KEY } from "./config.js";
 import cors from "cors";
+import path from 'path';
 import mongoose from 'mongoose';
 import jobRoute from "./routes/jobRoute.js";
 import application from "./routes/application.js";
@@ -59,6 +60,16 @@ app.post('/generate-email', async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   });
+
+
+  const __dirname = path.resolve();
+
+  app.use(express.static(path.join(__dirname, '../ui/dist')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../ui/dist/index.html'));
+  });
+
 
 // MongoDB connection and app start
 mongoose.connect(mongoDBURL)
