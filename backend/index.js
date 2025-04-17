@@ -62,13 +62,13 @@ app.post('/generate-email', async (req, res) => {
   });
 
 
-  const __dirname = path.resolve();
+  // const __dirname = path.resolve();
 
-  app.use(express.static(path.join(__dirname, '../ui/dist')));
+  // app.use(express.static(path.join(__dirname, '../ui/dist')));
   
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../ui/dist/index.html'));
-  });
+  // app.get('*', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, '../ui/dist/index.html'));
+  // });
 
 
 // MongoDB connection and app start
